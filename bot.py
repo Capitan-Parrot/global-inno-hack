@@ -18,11 +18,11 @@ dp = Dispatcher()
 async def cmd_start(message: types.Message):
     kb = [
         [
-            types.KeyboardButton(text='Web', web_app=WebAppInfo(url="https://teamflame.ru/"))
+            types.KeyboardButton(text='Web', web_app=WebAppInfo(url="https://useful-kite-settled.ngrok-free.app/"))
         ],
     ]
     markup = types.ReplyKeyboardMarkup(keyboard=kb, resize_keyboard=True)
-    await message.answer("https://teamflame.ru/", reply_markup=markup)
+    await message.answer("https://useful-kite-settled.ngrok-free.app/", reply_markup=markup)
 
 
 # Запуск процесса поллинга новых апдейтов
