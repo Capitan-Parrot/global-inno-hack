@@ -1,1 +1,1 @@
-web: sh -c "alembic upgrade head && uvicorn server:app --host=0.0.0.0 --port=${PORT}"
+worker: sh -c "alembic upgrade head && python bot.py $PORT"
