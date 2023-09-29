@@ -14,9 +14,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 @app.get("/")
 async def root():
     return {"message": "Hello from root!"}
+
 
 if __name__ == "__main__":
     uvicorn.run(
