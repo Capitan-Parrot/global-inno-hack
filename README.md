@@ -1,2 +1,2 @@
 # global-inno-hack
-Тут мы уже ничего не сможем сделать
+There’s nothing we can do
