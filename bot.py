@@ -6,10 +6,8 @@ from config import config
 
 # Включаем логирование, чтобы не пропустить важные сообщения
 logging.basicConfig(level=logging.INFO)
-
 # Объект бота
 bot = Bot(token=config.bot_token.get_secret_value())
-
 # Диспетчер
 dp = Dispatcher()
 
@@ -19,8 +17,8 @@ async def cmd_start(message: types.Message):
     await message.answer("Hello!")
 
 # Запуск процесса поллинга новых апдейтов
-async def main():
+async def start_polling():
     await dp.start_polling(bot)
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    asyncio.run(start_polling())
