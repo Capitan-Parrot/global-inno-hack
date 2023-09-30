@@ -7,7 +7,7 @@ class AuthService:
     def sign_in(self, user_id, email, password):
         response = requests.post(
             url=self.API_URL + '/sign-in',
-            data={
+            params={
                 'user_id': user_id,
                 'email': email,
                 'password': password

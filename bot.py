@@ -46,7 +46,8 @@ def save_data(message, email):
     try:
         password = message.text
         tokens = auth_service.sign_in(message.chat.id, email, password)
-        itembtn = telebot.types.ReplyKeyboardMarkup('sign-in')
+        print(123, tokens)
+        itembtn = telebot.types.InlineKeyboardButton('my-spaces')
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         markup.add(itembtn)
         bot.send_message(message.chat.id, "You are logged in", reply_markup=markup)
