@@ -1,15 +1,15 @@
 import telebot as telebot
+from telebot import types
 
 from config import config
 from services.auth import auth_service
 
 # Объект бота
 bot = telebot.TeleBot(token=config.bot_token.get_secret_value())
-
+markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
 
 @bot.message_handler(commands=['start'])
 def start(message):
-    markup = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True)
     itembtn = telebot.types.InlineKeyboardButton('sign-in')
     markup.add(itembtn)
     bot.send_message(message.chat.id, "Welcome to my bot!", reply_markup=markup)
@@ -36,7 +36,10 @@ def ask_password(message):
 def save_data(message, email):
     password = message.text
     tokens = auth_service.sign_in(message.chat.id, email, password)
-    bot.send_message(message.chat.id, "You are logged in")
+    itembtn = telebot.types.InlineKeyboardButton('sign-in')
+    markup.add(itembtn)
+    bot.send_message(message.chat.id, "You are logged in", reply_markup=markup)
+
 
 
 # Запуск процесса поллинга новых апдейтов
