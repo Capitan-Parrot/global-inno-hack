@@ -3,7 +3,6 @@ from fastapi import APIRouter
 from core.database import session
 from services.auth import auth_service
 from models.users import UserDB
-from models.tokens import TokenDB
 
 
 auth_router = APIRouter(prefix="/auth", tags=["auth"])
