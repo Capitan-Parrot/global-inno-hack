@@ -2,7 +2,7 @@ from fastapi import APIRouter
 
 from core.database import session
 from models.users import UserDB
-from schemes.tasks import TaskChangeColumn
+from schemes.tasks import TaskChangeColumn, CreateTask
 from services.tasks import tasks_service
 
 
@@ -35,4 +35,16 @@ async def change_column(user_id: int, request: TaskChangeColumn):
                                 task_id=request.task_id,
                                 column_id=request.column_id
                             )
+    return task
+
+
+@tasks_router.post('/create')
+async def create_task(user_id: int, request: CreateTask):
+    email = session.query(UserDB).filter_by(user_id=user_id).first().email
+    task = tasks_service.create_task(
+        email=email,
+        name=request.name,
+        description=request.description,
+        column_id=request.column_id,
+    )
     return task

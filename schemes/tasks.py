@@ -11,5 +11,3 @@ class CreateTask(BaseModel):
     name: str
     description: str | None
     column_id: str
-    startDate: datetime = 
-    endDate: datetime

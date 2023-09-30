@@ -59,8 +59,8 @@ class TaskService:
             url=self.API_URL + '/create',
             headers={
                 'accept': 'application/json',
-                'Authorization': f'Bearer {access_token}'
-            }
+                'Authorization': f'Bearer {access_token}',
+            },
             data={
                 'name': name,
                 'description': description,
@@ -68,5 +68,7 @@ class TaskService:
                 'location': column_id,
             }
         )
-        
+        return task.json()
+
+
 tasks_service = TaskService()
