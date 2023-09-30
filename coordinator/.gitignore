@@ -2,5 +2,5 @@
 .env
 venv
 .venv
-
-**/__pycache__/
+test.ipynb
+__pycache__

@@ -7,7 +7,7 @@ class TokenDB(Base):
     __tablename__ = "tokens"
 
     id = Column(Integer, primary_key=True, index=True)
-    chat_id = Column(Integer)
+    email = Column(String, unique=True)
     refresh_token = Column(String)
     access_token = Column(String)
 
