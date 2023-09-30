@@ -100,3 +100,5 @@ class SpaceService():
 
 
 space_service = SpaceService()
+
+result = space_service.get
