@@ -1,15 +1,9 @@
 import requests
 
-from sqlalchemy.orm import Session
-import random
-
-from coordinator.core.database import session
-from coordinator.models import TokenDB
-
 my_access_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJvZGlvbnpha3JhdWxza2lqQGdtYWlsLmNvbSIsInVzZXJJZCI6IjY1MTJmOWVmODc5OTgyYzIwZjBhNGExZiIsImlhdCI6MTY5NjA1NTgwNCwiZXhwIjoxNjk2MzU1ODA0fQ.im7Mi9N-e79mF3kedbKFJeYcuSl7Sk9kj6yfo3bJ4s8"
 
-from coordinator.core.database import session
-from coordinator.models import TokenDB
+from core.database import session
+from models import TokenDB
 
 
 class SpaceService():

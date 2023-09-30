@@ -1,7 +1,7 @@
 import requests
 
-from coordinator.core.database import session
-from coordinator.models import TokenDB
+from core.database import session
+from models import TokenDB
 
 
 class ColumnsService():

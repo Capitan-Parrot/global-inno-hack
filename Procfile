@@ -1,0 +1,1 @@
+worker: sh -c "alembic upgrade head && python server.py $PORT"

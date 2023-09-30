@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from coordinator.config import config
+from config import config
 
 
 def get_url():

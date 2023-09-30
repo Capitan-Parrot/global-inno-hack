@@ -1,10 +1,10 @@
 import requests
 
-from coordinator.core.database import session
-from coordinator.models import TokenDB
+from core.database import session
+from models import TokenDB
 
 
-class BoardsServise():
+class BoardsService():
     API_URL = 'https://api.teamflame.ru/board'
 
 
