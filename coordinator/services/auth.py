@@ -7,13 +7,7 @@ from coordinator.models import TokenDB
 class AuthService:
     API_URL = 'https://auth-api.teamflame.ru/auth'
 
-<<<<<<< HEAD
-    def sign_in(self, user_id, email, password):
-=======
     def sign_in(self, email, password):
->>>>>>> 5015215601d75efd47783de213c792ae6725376d
-        # , email: str, password: str
-        # access_token = ...
         response = requests.post(
             url=self.API_URL + '/sign-in',
             data={
@@ -25,11 +19,7 @@ class AuthService:
             }
         )
         tokens = response.json()
-<<<<<<< HEAD
-        db_token = TokenDB(user_id=user_id,
-=======
         db_token = TokenDB(email=email,
->>>>>>> 5015215601d75efd47783de213c792ae6725376d
                            access_token=tokens["tokens"]["accessToken"]["token"],
                            refresh_token=tokens["tokens"]["refreshToken"]["token"])
         session.add(db_token)
