@@ -74,7 +74,6 @@ def my_projects(message, name_to_id):
     space_name = message.text
     space_id = name_to_id[space_name]
     projects = project_service.get_project_by_space_id(message.from_user.id, space_id)
-    print('projects', projects)
     markup = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True)
     name_to_id = {}
     for project in projects:
@@ -86,14 +85,12 @@ def my_projects(message, name_to_id):
 
 def my_boards(message, name_to_id):
     if message.text == "Вернуться к пространствам":
-        print('return')
         return my_spaces(message)
     project_name = message.text
     project_id = name_to_id[project_name]
     boards = board_service.get_board_by_project_id(message.from_user.id, project_id)
     markup = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True)
     name_to_id = {}
-    print('boards', boards)
     for board in boards:
         markup.add(telebot.types.InlineKeyboardButton(board["name"]))
         name_to_id[board["name"]] = board["id"]
