@@ -11,7 +11,7 @@ auth_router = APIRouter(prefix="/auth", tags=["auth"])
 
 @auth_router.get('/')
 def sign_in(user_id: int, email: str, password: str):
-    user = session.query(UserDB).filter_by(email=email)
+    user = session.query(UserDB).filter_by(email=email).first()
     if user:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
