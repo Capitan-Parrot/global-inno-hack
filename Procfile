@@ -1,1 +1,1 @@
-worker: sh -c "alembic upgrade head && python server.py $PORT"
+web: sh -c "alembic upgrade head && python server.py $PORT"
