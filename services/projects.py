@@ -19,5 +19,17 @@ class ProjectService():
         )
         return spaces.json()
 
+    def get_project_by_id(self, email: str, project_id: str):
+        token = session.query(TokenDB).filter_by(email=email).first()
+        access_token = token.access_token
+        projects = requests.get(
+            url=self.API_URL + f'/{project_id}',
+            headers={
+                'accept': 'application/json',
+                'Authorization': f'Bearer {access_token}',
+            }
+        )
+        return projects.json()
+
 
 project_service = ProjectService()

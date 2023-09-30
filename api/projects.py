@@ -15,3 +15,12 @@ def get_project_by_space_id(user_id: int, space_id: str):
                                             email=email,
                                             space_id=space_id
                                             )
+
+
+@projects_router.get('/{project_id}')
+def get_project_by_id(user_id: int, project_id: str):
+    email = session.query(UserDB).filter_by(user_id=user_id).first().email
+    return project_service.get_project_by_id(
+                                    email=email,
+                                    project_id=project_id,
+                                    )
