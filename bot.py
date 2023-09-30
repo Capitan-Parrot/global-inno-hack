@@ -57,7 +57,6 @@ def save_data(message, email):
 
 @bot.message_handler(commands=['my-spaces'])
 def my_spaces(message):
-
     spaces = space_service.get_spaces_by_user_id(message.chat.id)
     print('spaces', spaces)
     markup = telebot.types.ReplyKeyboardMarkup()

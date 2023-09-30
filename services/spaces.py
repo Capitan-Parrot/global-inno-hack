@@ -2,7 +2,7 @@ import requests
 
 
 class SpaceService():
-    API_URL = 'https://api.teamflame.ru/space'
+    API_URL = 'https://global-inno-hack-dd509ac0d0a4.herokuapp.com/space'
 
     def get_spaces_by_user_id(self, chat_id: int):
         spaces = requests.get(

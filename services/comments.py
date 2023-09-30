@@ -2,7 +2,7 @@ import requests
 
 
 class CommentServices:
-    API_URL = 'https://api.teamflame.ru/comment'
+    API_URL = 'https://global-inno-hack-dd509ac0d0a4.herokuapp.com/comment'
 
     def add_comment(self, chat_id: int, task_id: str, text_message: str):
         token = session.query(TokenDB).filter_by(chat_id=chat_id).first()

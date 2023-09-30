@@ -2,7 +2,7 @@ import requests
 
 
 class ProjectService():
-    API_URL = 'https://api.teamflame.ru/project'
+    API_URL = 'https://global-inno-hack-dd509ac0d0a4.herokuapp.com/project'
 
     def get_project_by_space_id(self, chat_id: int, space_id: str):
         token = session.query(TokenDB).filter_by(chat_id=chat_id).first()

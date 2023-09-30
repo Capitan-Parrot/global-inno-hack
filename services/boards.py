@@ -2,7 +2,7 @@ import requests
 
 
 class BoardsServise():
-    API_URL = 'https://api.teamflame.ru/board'
+    API_URL = 'https://global-inno-hack-dd509ac0d0a4.herokuapp.com/board'
 
     def get_board_by_project_id(self, chat_id: int, project_id: str):
         token = session.query(TokenDB).filter_by(chat_id=chat_id).first()

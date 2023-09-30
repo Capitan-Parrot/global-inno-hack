@@ -1,16 +1,14 @@
 import requests
 
 
-
 class AuthService:
-    API_URL = 'https://auth-api.teamflame.ru/auth'
+    API_URL = 'https://global-inno-hack-dd509ac0d0a4.herokuapp.com/auth'
 
-    def sign_in(self, chat_id, email, password):
-        # , email: str, password: str
-        # access_token = ...
+    def sign_in(self, user_id, email, password):
         response = requests.post(
             url=self.API_URL + '/sign-in',
             data={
+                'user_id': user_id,
                 'email': email,
                 'password': password
             },
