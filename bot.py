@@ -15,7 +15,7 @@ bot = telebot.TeleBot(token=config.bot_token.get_secret_value())
 @bot.message_handler(commands=['start'])
 def start(message):
     itembtn = telebot.types.InlineKeyboardButton('Войти в аккаунт TeamFlame')
-    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
     markup.add(itembtn)
     bot.send_message(message.chat.id, """
 Это бот Team Flame!
@@ -61,7 +61,7 @@ def save_data(message, email):
 def my_spaces(message):
 
     spaces = space_service.get_spaces_by_user_id(message.from_user.id)
-    markup = telebot.types.ReplyKeyboardMarkup()
+    markup = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True)
     name_to_id = {}
     for space in spaces:
         markup.add(telebot.types.InlineKeyboardButton(text=space["name"]))
@@ -74,7 +74,7 @@ def my_projects(message, name_to_id):
     space_name = message.text
     space_id = name_to_id[space_name]
     projects = project_service.get_project_by_space_id(message.from_user.id, space_id)
-    markup = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True)
+    markup = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
     name_to_id = {}
     for project in projects:
         markup.add(telebot.types.InlineKeyboardButton(project["name"]))
@@ -89,7 +89,7 @@ def my_boards(message, name_to_id):
     project_name = message.text
     project_id = name_to_id[project_name]
     boards = board_service.get_board_by_project_id(message.from_user.id, project_id)
-    markup = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True)
+    markup = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
     for board in boards:
         markup.add(telebot.types.InlineKeyboardButton(board["name"]))
     bot.send_message(message.chat.id, "Ваши доски:", reply_markup=markup)
