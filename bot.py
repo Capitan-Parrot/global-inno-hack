@@ -1,33 +1,45 @@
 import asyncio
 import logging
-from aiogram import Bot, Dispatcher, types
-from aiogram.filters.command import Command
-from aiogram.types import WebAppInfo
+
+import telebot as telebot
 
 from config import config
 
 # Включаем логирование, чтобы не пропустить важные сообщения
 logging.basicConfig(level=logging.INFO)
 # Объект бота
-bot = Bot(token=config.bot_token.get_secret_value())
-# Диспетчер
-dp = Dispatcher()
+bot = telebot.TeleBot(token=config.bot_token.get_secret_value())
 
-# Хэндлер на команду /start
-@dp.message(Command("start"))
-async def cmd_start(message: types.Message):
-    kb = [
-        [
-            types.KeyboardButton(text='Web', web_app=WebAppInfo(url="https://useful-kite-settled.ngrok-free.app/"))
-        ],
-    ]
-    markup = types.ReplyKeyboardMarkup(keyboard=kb, resize_keyboard=True)
-    await message.answer("https://useful-kite-settled.ngrok-free.app/", reply_markup=markup)
+
+@bot.message_handler(commands=['start'])
+def start(message):
+    markup = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True)
+    itembtn = telebot.types.KeyboardButton('Sign-In')
+    markup.add(itembtn)
+    bot.send_message(message.chat.id, "Welcome to my bot!", reply_markup=markup)
+
+
+@bot.message_handler(func=lambda message: True)
+def echo_all(message):
+    if message.text == 'Sign-In':
+        bot.send_message(message.chat.id, "Please enter your email:")
+        bot.register_next_step_handler(message, ask_password)
+
+
+def ask_password(message):
+    email = message.text
+    bot.send_message(message.chat.id, "Please enter your password:")
+    bot.register_next_step_handler(message, print_data, email)
+
+
+def print_data(message, email):
+    password = message.text
+    bot.send_message(message.chat.id, f"Email: {email}\nPassword: {password}")
 
 
 # Запуск процесса поллинга новых апдейтов
 async def start_polling():
-    await dp.start_polling(bot)
+    await bot.polling()
 
 if __name__ == "__main__":
     asyncio.run(start_polling())
