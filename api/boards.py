@@ -23,6 +23,12 @@ async def get_board_by_user_id(user_id: int):
     return board.board_id
 
 
+@boards_router.get('/{board_id}')
+async def get_board_by_id(user_id: int, board_id: str):
+    email = session.query(UserDB).filter_by(user_id=user_id).first().email
+    return board_service.get_board_by_id(email=email, board_id=board_id)
+
+
 @boards_router.post('/boardsToUser')
 async def create_board_to_user(user_id: int, board_id: str):
     board = session.query(BoardDB).filter_by(user_id=user_id).first()
