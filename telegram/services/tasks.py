@@ -1,8 +1,5 @@
 import requests
 
-from core.database import session
-from models.tokens import TokenDB
-
 
 class TaskService:
     API_URL = 'https://api.teamflame.ru/task'

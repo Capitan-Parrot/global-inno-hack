@@ -1,8 +1,5 @@
 import requests
-from sqlalchemy.orm import Session
 
-from core.database import session
-from models import TokenDB
 
 
 class AuthService:
@@ -22,11 +19,6 @@ class AuthService:
             }
         )
         tokens = response.json()
-        db_token = TokenDB(chat_id=chat_id,
-                           access_token=tokens["tokens"]["accessToken"]["token"],
-                           refresh_token=tokens["tokens"]["refreshToken"]["token"])
-        session.add(db_token)
-        session.commit()
         return tokens
 
 

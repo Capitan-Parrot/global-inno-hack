@@ -3,11 +3,11 @@ from sqlalchemy import Column, Integer, String, Boolean
 from .base import Base
 
 
-class UserDB(Base):
-    __tablename__ = "users"
+class TokenDB(Base):
+    __tablename__ = "tokens"
 
     id = Column(Integer, primary_key=True, index=True)
     email = Column(String, unique=True)
-    chat_id = Column(Integer)
+    refresh_token = Column(String)
+    access_token = Column(String)
 
-    

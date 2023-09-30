@@ -1,8 +1,5 @@
 import requests
 
-from core.database import session
-from models import TokenDB
-
 
 class SpaceService():
     API_URL = 'https://api.teamflame.ru/space'

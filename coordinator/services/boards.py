@@ -1,7 +1,7 @@
 import requests
 
-from core.database import session
-from models.tokens import TokenDB
+from coordinator.core.database import session
+from coordinator.models import TokenDB
 
 
 class BoardsServise():

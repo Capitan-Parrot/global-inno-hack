@@ -1,12 +1,10 @@
-import json
-
 import telebot as telebot
 from telebot import types
 
-from config import config
-from services.auth import auth_service
-from services.projects import project_service
-from services.spaces import space_service
+from coordinator.config import config
+from coordinator.services.auth import auth_service
+from coordinator.services import project_service
+from coordinator.services.spaces import space_service
 
 # Объект бота
 bot = telebot.TeleBot(token=config.bot_token.get_secret_value())
@@ -69,7 +67,19 @@ def get_space(message, name_to_id):
     for project in projects:
         markup.add(telebot.types.InlineKeyboardButton(project["name"]))
     bot.send_message(message.chat.id, "Ваши проекты", reply_markup=markup)
-    bot.register_next_step_handler(message, get_space, name_to_id)
+    bot.register_next_step_handler(message, get_tasks, name_to_id)
+
+
+def get_tasks(message, name_to_id):
+    space_name = message.text
+    space_id = name_to_id[space_name]
+    projects = project_service.get_project_by_space_id(message.chat.id, space_id)
+    markup = telebot.types.ReplyKeyboardMarkup()
+    for project in projects:
+        markup.add(telebot.types.InlineKeyboardButton(project["name"]))
+    bot.send_message(message.chat.id, "Ваши проекты", reply_markup=markup)
+    bot.register_next_step_handler(message, get_boards, name_to_id)
+
 
 if __name__ == "__main__":
     bot.infinity_polling(none_stop=True)

@@ -2,7 +2,7 @@ from alembic import context
 from sqlalchemy import engine_from_config, pool
 from logging.config import fileConfig
 
-from core.database import get_url
+from coordinator.core.database import get_url
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -18,7 +18,7 @@ fileConfig(config.config_file_name)
 # target_metadata = mymodel.Base.metadata
 # target_metadata = None
 
-from models import Base  # noqa
+from coordinator.models import Base  # noqa
 
 target_metadata = Base.metadata
 
