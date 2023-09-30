@@ -19,9 +19,11 @@ class AuthService:
             }
         )
         tokens = response.json()
-        db_token = TokenDB(email=email,
-                           access_token=tokens["tokens"]["accessToken"]["token"],
-                           refresh_token=tokens["tokens"]["refreshToken"]["token"])
+        db_token = session.query(TokenDB).filter_by(email=email).first()
+        if not db_token:
+            db_token = TokenDB(email=email)
+        db_token.refresh_token = tokens["tokens"]["refreshToken"]["token"]
+        db_token.access_token = tokens["tokens"]["accessToken"]["token"]
         session.add(db_token)
         session.commit()
         return tokens
