@@ -22,7 +22,6 @@ class AuthService:
             }
         )
         tokens = response.json()
-        print(tokens)
         db_token = TokenDB(chat_id=chat_id,
                            access_token=tokens["tokens"]["accessToken"]["token"],
                            refresh_token=tokens["tokens"]["refreshToken"]["token"])

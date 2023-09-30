@@ -1,14 +1,15 @@
 import requests
-from sqlalchemy.orm import Session
 
-my_access_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImxpemFfdmF0ZXJAeWFob28uY29tIiwidXNlcklkIjoiNjUxNzIyMDU4Nzk5ODJjMjBmMGI2Yjc3IiwiaWF0IjoxNjk2MDU1NDkzLCJleHAiOjE2OTYzNTU0OTN9.Reku1ISR-kjxPCl5NpUx5CnayQ4UcWnnxwYPwc9broQ'
+from core.database import session
+from models.tokens import TokenDB
 
 
 class TaskService:
     API_URL = 'https://api.teamflame.ru/task'
 
-    def get_task_by_id(self, task_id: str):
-        access_token = my_access_token
+    def get_task_by_id(self, chat_id: int, task_id: str):
+        token = session.query(TokenDB).filter_by(chat_id=chat_id).first()
+        access_token = token.access_token
         task = requests.get(
             url=self.API_URL + f'/{task_id}',
             headers={
@@ -16,11 +17,12 @@ class TaskService:
                 'Authorization': f'Bearer {access_token}',
             }
         )
-        return task
+        return task.json()
 
-    def change_task_column(self, task_id: str, column_id: str):
-        access_token = my_access_token
-        response = requests.post(
+    def change_task_column(self, chat_id: int, task_id: str, column_id: str):
+        token = session.query(TokenDB).filter_by(chat_id=chat_id).first()
+        access_token = token.access_token
+        task = requests.post(
             url=self.API_URL + f'/change-column/{task_id}',
             headers={
                 'accept': 'application/json',
@@ -31,7 +33,7 @@ class TaskService:
                 'location': task_id
             }
         )
+        return task.json()
 
 
 task_service = TaskService()
-task_service.change_task_column(task_id='6517220ff074f999078a71bd', column_id='6517220ff074f999078a71b2')
