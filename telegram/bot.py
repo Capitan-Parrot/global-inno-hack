@@ -88,7 +88,7 @@ def get_boards(message, name_to_id):
 
 
 def get_tasks(message):
-    bot.send_message(message.chat.id, "Список задач:")
+    bot.send_message(message.chat.id, "Ваш список задач:")
 
 
 if __name__ == "__main__":
