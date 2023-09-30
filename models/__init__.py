@@ -1,2 +1,1 @@
-from models.base import Base
-from models.users import UserDB
+from models.tokens import TokenDB

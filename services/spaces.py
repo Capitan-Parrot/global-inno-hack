@@ -13,7 +13,6 @@ class SpaceService():
         '''
         Get list of spaces, created by user or smth like that
         '''
-        
         spaces = requests.get(
             url=self.API_URL + '/spacesByUserId',
             headers={
@@ -36,7 +35,6 @@ class SpaceService():
         ).json()
 
         print('Your spaces:')
-        
 
         for _space in spaces:
             print(_space['name'], _space['id'])
@@ -57,61 +55,28 @@ class SpaceService():
         ).json()
 
         return spaces
-    
+    def create_space(self):
 
-    def create(self, members: list, name: str="Test Space"):
-        '''
-        Create space where members is list of emails 
-        '''
-        result= requests.post(
-            url=self.API_URL + '/create',
+        result = requests.post(
+            url=self.API_URL + '/get-all-space-tasks/' + space_id,
             headers={
                 'accept': 'application/json',
                 'Authorization': f'Bearer {self.token}',
             },
             data={
-                "name": name,
-                "logo": "",
-                "color": "#"+''.join([random.choice('0123456789ABCDEF') for _ in range(6)]),
-                "invites": members
+                "name": "Test space",
+                "logo": "https://play-lh.googleusercontent.com/ZyWNGIfzUyoajtFcD7NhMksHEZh37f-MkHVGr5Yfefa-IX7yj9SMfI82Z7a2wpdKCA=w240-h480-rw",
+                "color": "#ffffff",
+                "invites": [
+                    "rodionzakraulskij@gmail.com"
+                ]
             }
         ).json()
-
-        return result
-    
-    def update_space(self):
-        '''
-        Update main info about space
-        '''
- 
-        result= requests.post(
-            url=self.API_URL + '/update' + '65172175f074f999078a6e3d',
-            headers={
-                'accept': 'application/json',
-                'Authorization': f'Bearer {self.token}',
-            },
-            # data={
-            #     "name": name,
-            #     "logo": logo,
-            #     "color": color,
-            #     "desription": desription
-            # }
-        ).json()
-
         return result
     
 
+sr = SpaceService()
+result = sr.get_spaces_by_user_id()[0]
 
-
-invites =  [
-    "rodionzakraulskij@gmail.com",
-
-]
-
-ss = SpaceService()
-result = ss.update_space()
-
-print(result)
-
-# space_id = result['id']
-
+space_id = result['id']
+print(space_id)
