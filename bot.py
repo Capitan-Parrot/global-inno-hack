@@ -5,6 +5,7 @@ from telebot import types
 
 from config import config
 from services.auth import auth_service
+from services.projects import project_service
 from services.spaces import space_service
 
 # Объект бота
@@ -50,7 +51,8 @@ def save_data(message, email):
 @bot.message_handler(commands=['my-spaces'])
 def my_spaces(message):
     spaces = space_service.get_spaces_by_user_id(message.chat.id)
-    markup = telebot.types.ReplyKeyboardMarkup()
+    print(spaces)
+    markup = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True)
     name_to_id = {}
     for space in spaces:
         markup.add(telebot.types.InlineKeyboardButton(space["name"]))
@@ -59,11 +61,15 @@ def my_spaces(message):
     bot.register_next_step_handler(message, get_space, name_to_id)
 
 
-def get_space(message, names):
-    print(message)
-    space_id = message["text"]
-    print(space_id)
-
+def get_space(message, name_to_id):
+    space_name = message.text
+    space_id = name_to_id[space_name]
+    projects = project_service.get_project_by_space_id(message.chat.id, space_id)
+    markup = telebot.types.ReplyKeyboardMarkup()
+    for project in projects:
+        markup.add(telebot.types.InlineKeyboardButton(project["name"]))
+    bot.send_message(message.chat.id, "Ваши проекты", reply_markup=markup)
+    bot.register_next_step_handler(message, get_space, name_to_id)
 
 if __name__ == "__main__":
     bot.infinity_polling(none_stop=True)

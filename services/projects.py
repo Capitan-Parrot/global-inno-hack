@@ -20,4 +20,4 @@ class ProjectService():
         return spaces.json()
 
 
-projects = ProjectService()
+project_service = ProjectService()
