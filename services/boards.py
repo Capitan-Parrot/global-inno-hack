@@ -7,7 +7,6 @@ from models import TokenDB
 class BoardsService():
     API_URL = 'https://api.teamflame.ru/board'
 
-
     def get_board_by_project_id(self, email: str, project_id: str):
         token = session.query(TokenDB).filter_by(email=email).first()
         access_token = token.access_token
@@ -19,13 +18,12 @@ class BoardsService():
             }
         )
         return boards.json()
-    
+
     def create_board(self,
                      email: str,
                      name: str,
                      space_id: str,
                      project_id: str):
-
 
         token = session.query(TokenDB).filter_by(email=email).first()
 
@@ -47,4 +45,4 @@ class BoardsService():
         return board.json()
 
 
-board_service = BoardsServise()
+board_service = BoardsService()

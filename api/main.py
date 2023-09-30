@@ -1,8 +1,5 @@
-from fastapi import FastAPI, APIRouter
+from fastapi import APIRouter
 from api import auth_router, boards_router, projects_router, spaces_router, tasks_router, users_router  # noqa : F401
-
-
-app = FastAPI()
 
 router = APIRouter()
 
