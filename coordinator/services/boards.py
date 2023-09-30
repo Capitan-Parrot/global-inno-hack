@@ -7,8 +7,9 @@ from coordinator.models import TokenDB
 class BoardsServise():
     API_URL = 'https://api.teamflame.ru/board'
 
-    def get_board_by_project_id(self, user_id: int, project_id: str):
-        token = session.query(TokenDB).filter_by(user_id=user_id).first()
+
+    def get_board_by_project_id(self, email: str, project_id: str):
+        token = session.query(TokenDB).filter_by(email=email).first()
         access_token = token.access_token
         boards = requests.get(
             url=self.API_URL + f'/boardsByProject/{project_id}',
@@ -20,12 +21,14 @@ class BoardsServise():
         return boards.json()
     
     def create_board(self,
-                     user_id: int,
+                     email: str,
                      name: str,
                      space_id: str,
                      project_id: str):
 
-        token = session.query(TokenDB).filter_by(user_id=user_id).first()
+
+        token = session.query(TokenDB).filter_by(email=email).first()
+
         access_token = token.access_token
         board = requests.post(
             url=self.API_URL + '/create',
