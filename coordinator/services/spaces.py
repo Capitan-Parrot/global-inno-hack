@@ -8,12 +8,12 @@ from coordinator.models import TokenDB
 
 my_access_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJvZGlvbnpha3JhdWxza2lqQGdtYWlsLmNvbSIsInVzZXJJZCI6IjY1MTJmOWVmODc5OTgyYzIwZjBhNGExZiIsImlhdCI6MTY5NjA1NTgwNCwiZXhwIjoxNjk2MzU1ODA0fQ.im7Mi9N-e79mF3kedbKFJeYcuSl7Sk9kj6yfo3bJ4s8"
 
+from coordinator.core.database import session
+from coordinator.models import TokenDB
+
 
 class SpaceService():
     API_URL = 'https://api.teamflame.ru/space'
-    token = my_access_token
-
-
 
     def get_spaces_by_user_id(self, chat_id: int):
         token = session.query(TokenDB).filter_by(chat_id=chat_id).first()
@@ -23,7 +23,8 @@ class SpaceService():
             url=self.API_URL + '/spacesByUserId',
             headers={
                 'accept': 'application/json',
-                'Authorization': f'Bearer {self.token}',
+                'Authorization': f'Bearer {access_token}',
+
             }
         )
         return spaces.json()
@@ -84,8 +85,23 @@ class SpaceService():
         return result
     
 
+    def get_spaces_by_id(self, chat_id: int, space_id: str):
+        token = session.query(TokenDB).filter_by(chat_id=chat_id).first()
+        access_token = token.access_token
+        spaces = requests.get(
+            url=self.API_URL + f'/{space_id}',
+            headers={
+                'accept': 'application/json',
+                'Authorization': f'Bearer {access_token}',
+            }
+        )
+        return spaces
+
+
 sr = SpaceService()
 result = sr.get_spaces_by_user_id()[0]
 
 space_id = result['id']
 print(space_id)
+
+space_service = SpaceService()

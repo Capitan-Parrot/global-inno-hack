@@ -1,4 +1,10 @@
 import requests
+<<<<<<<< HEAD:telegram/services/spaces.py
+========
+
+from coordinator.core.database import session
+from coordinator.models import TokenDB
+>>>>>>>> 1f061139b67a62876ee623b396aa9dc6e708928e:coordinator/services/spaces.py
 
 
 class SpaceService():

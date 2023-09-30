@@ -3,8 +3,6 @@ from pydantic import SecretStr
 
 
 class Settings(BaseSettings):
-    bot_token: SecretStr
-
     server_host: str = '127.0.0.1'
     server_port: int = 8000
 
