@@ -18,3 +18,6 @@ class CommentServices:
                 'text': text_message,
             }
         )
+
+
+comments = CommentServices()
