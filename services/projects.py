@@ -10,16 +10,29 @@ my_access_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJvZGlvbnph
 
 class ProjectService():
     API_URL = 'https://api.teamflame.ru/project'
+    access_token = my_access_token
 
     def get_project_by_space_id(self, db: Session=None, space_id: str=None):
-        access_token = my_access_token
+        
         spaces = requests.get(
             url=self.API_URL + '/projectsBySpace/' + space_id,
             headers={
                 'accept': 'application/json',
-                'Authorization': f'Bearer {access_token}',
+                'Authorization': f'Bearer {self.access_token}',
             }
-            
+        )
+
+        return spaces.json()
+    
+    
+    def get_project_by_user_id(self, db: Session=None, user_id: str=None):
+    
+        spaces = requests.get(
+            url=self.API_URL + '/projectsBySpace/' + user_id,
+            headers={
+                'accept': 'application/json',
+                'Authorization': f'Bearer {self.access_token}',
+            }
         )
 
         return spaces.json()
