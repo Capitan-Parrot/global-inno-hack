@@ -33,13 +33,13 @@ def handle_message(message):
 
 @bot.message_handler(commands=['Войти в аккаунт TeamFlame'])
 def sign_in(message):
-    bot.send_message(message.chat.id, "Please enter your email:", reply_markup=ReplyKeyboardRemove())
+    bot.send_message(message.chat.id, "Введите свой email:", reply_markup=ReplyKeyboardRemove())
     bot.register_next_step_handler(message, ask_password)
 
 
 def ask_password(message):
     email = message.text
-    bot.send_message(message.chat.id, "Please enter your password:")
+    bot.send_message(message.chat.id, "Введите свой пароль:")
     bot.register_next_step_handler(message, save_data, email)
 
 
@@ -53,7 +53,7 @@ def save_data(message, email):
         bot.send_message(message.chat.id, "Вы успешно авторизованы")
         my_spaces(message)
     except KeyError:
-        bot.send_message(message.chat.id, "User was not found. Please try again")
+        bot.send_message(message.chat.id, "Аккаунт не найден. Пожалуйста, попробуйте ещё раз.")
         bot.register_next_step_handler(message, start)
 
 
