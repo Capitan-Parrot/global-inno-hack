@@ -24,4 +24,4 @@ class CommentServices:
         return new_comment.json()
 
 
-comments = CommentServices()
+comments_service = CommentServices()

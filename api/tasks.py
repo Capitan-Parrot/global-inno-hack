@@ -1,8 +1,9 @@
+from fastapi import APIRouter
+
 from core.database import session
 from models.users import UserDB
-
+from schemes.tasks import TaskChangeColumn
 from services.tasks import tasks_service
-from fastapi import APIRouter
 
 
 tasks_router = APIRouter(prefix='/tasks', tags=['tasks'])
@@ -27,11 +28,11 @@ async def get_task_by_column(user_id: int, column_id: str):
 
 
 @tasks_router.post('/change_column')
-async def change_column(user_id: int, task_id: str, column_id: str):
+async def change_column(user_id: int, request: TaskChangeColumn):
     email = session.query(UserDB).filter_by(user_id=user_id).first().email
     task = tasks_service.change_task_column(
-                            email=email,
-                            task_id=task_id,
-                            column_id=column_id
+                                email=email,
+                                task_id=request.task_id,
+                                column_id=request.column_id
                             )
     return task
