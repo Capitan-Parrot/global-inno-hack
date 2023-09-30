@@ -2,7 +2,7 @@ from core.database import session
 from models.users import UserDB
 
 from services.boards import board_service
-from fastapi import FastApi, APIRouter
+from fastapi import APIRouter
 
 
 boards_router = APIRouter(prefix='/board', tags=['board'])
