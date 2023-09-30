@@ -24,7 +24,7 @@ async def run_telebot():
     bot.infinity_polling(none_stop=True)
 
 
-# Запустите Telebot в асинхронном режиме
+
 telebot_task = asyncio.ensure_future(run_telebot())
 
 if __name__ == "__main__":

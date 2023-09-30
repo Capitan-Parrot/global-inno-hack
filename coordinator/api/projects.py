@@ -9,6 +9,14 @@ api_router = APIRouter(prefix='/project', tags=['project'])
 
 
 @api_router.get("/projectsBySpace/{space_id}")
-def get_project_by_space_id(user_id: int, space_id: str):
+def get_projects_by_space_id(user_id: int, space_id: str):
+    '''
+    user_id - id of user in current messanger system
+    
+    space_id 
+    
+    return list of projects
+    '''
     email = session.query(UserDB).filter_by(user_id=user_id).first().email
-    return project_service.get_project_by_space_id(email, space_id)
+    projects = project_service.get_project_by_space_id(email, space_id)
+    return projects

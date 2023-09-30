@@ -1,17 +1,10 @@
 import telebot as telebot
 from telebot import types
 
-<<<<<<< HEAD
-from coordinator.config import config
-from coordinator.services.auth import auth_service
-from coordinator.services import project_service
-from coordinator.services.spaces import space_service
-=======
 from telegram.config import config
 from telegram.services.auth import auth_service
 from telegram.services.projects import project_service
 from telegram.services.spaces import space_service
->>>>>>> 1f061139b67a62876ee623b396aa9dc6e708928e
 
 # Объект бота
 bot = telebot.TeleBot(token=config.bot_token.get_secret_value())
