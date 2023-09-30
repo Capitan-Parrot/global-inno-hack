@@ -23,7 +23,7 @@ class AuthService:
         )
         tokens = response.json()
         print(tokens)
-        db_token = TokenDB(message_chat_id=chat_id,
+        db_token = TokenDB(chat_id=chat_id,
                            access_token=tokens["tokens"]["accessToken"]["token"],
                            refresh_token=tokens["tokens"]["refreshToken"]["token"])
         session.add(db_token)

@@ -3,6 +3,7 @@ from telebot import types
 
 from config import config
 from services.auth import auth_service
+from services.spaces import space_service
 
 # Объект бота
 bot = telebot.TeleBot(token=config.bot_token.get_secret_value())
@@ -19,6 +20,8 @@ def start(message):
 def handle_message(message):
     if message.text == 'sign-in':
         sign_in(message)
+    elif message.text == 'my-spaces':
+        my_spaces(message)
 
 
 @bot.message_handler(commands=['sign-in'])
@@ -41,8 +44,15 @@ def save_data(message, email):
     bot.send_message(message.chat.id, "You are logged in", reply_markup=markup)
 
 
+@bot.message_handler(commands=['my-spaces'])
+def my_spaces(message):
+    spaces = space_service.get_spaces_by_user_id(message.chat.id)
+    keyboard = []
+    for space in spaces:
+        keyboard.append(telebot.types.InlineKeyboardButton(space["name"], callback_data=space["id"]))
+    markup.keyboard = keyboard
+    bot.send_message(message.chat.id, reply_markup=markup)
 
-# Запуск процесса поллинга новых апдейтов
 
 if __name__ == "__main__":
     bot.infinity_polling(none_stop=True)

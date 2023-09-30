@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 class CommentServices:
     API_URL = 'https://api.teamflame.ru/comment'
 
-    def add_comment(self, db: Session, task_id: str, text_message: str):
+    def add_comment(self, task_id: str, text_message: str):
         # access_token = ...
         requests.post(
             url=self.API_URL + '/create',
