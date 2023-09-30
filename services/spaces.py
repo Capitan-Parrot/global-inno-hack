@@ -13,14 +13,14 @@ class SpaceService():
         )
         return spaces.json()
 
-    def get_spaces_by_id(self, chat_id: int, space_id: str):
-        token = session.query(TokenDB).filter_by(chat_id=chat_id).first()
-        access_token = token.access_token
+    def get_spaces_by_id(self, user_id: int, space_id: str):
         spaces = requests.get(
             url=self.API_URL + f'/{space_id}',
+            params={
+                'user_id': user_id
+            },
             headers={
                 'accept': 'application/json',
-                'Authorization': f'Bearer {access_token}',
             }
         )
         return spaces

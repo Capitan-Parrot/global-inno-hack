@@ -6,7 +6,7 @@ from config import config
 from services.auth import auth_service
 from services.projects import project_service
 from services.spaces import space_service
-from services.boards import boards as board_service
+from services.boards import board_service
 
 # Объект бота
 bot = telebot.TeleBot(token=config.bot_token.get_secret_value())
@@ -90,22 +90,18 @@ def my_boards(message, name_to_id):
     project_id = name_to_id[project_name]
     boards = board_service.get_board_by_project_id(message.from_user.id, project_id)
     markup = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True)
-    name_to_id = {}
     for board in boards:
         markup.add(telebot.types.InlineKeyboardButton(board["name"]))
-        name_to_id[board["name"]] = board["id"]
     bot.send_message(message.chat.id, "Ваши доски:", reply_markup=markup)
-    bot.register_next_step_handler(message, get_tasks, name_to_id)
+    bot.register_next_step_handler(message, get_tasks)
 
 
-def get_tasks(message, name_to_id):
-    board_name = message.text
-    board_id = name_to_id[board_name]
-    keyboard = types.InlineKeyboardMarkup()  # создаем клавиатуру
-    webAppTest = types.WebAppInfo("https://useful-kite-settled.ngrok-free.app", user_id=message.from_user.id, board_id=board_id)  # создаем webappinfo - формат хранения url
-    one_button = types.InlineKeyboardButton(text="Тестовая страница", web_app=webAppTest)  # создаем кнопку типа webapp
-    keyboard.add(one_button)
-    bot.send_message(message.chat.id, "Тестовая страница", reply_markup=keyboard)
+def get_tasks(message):
+    keyboard = types.InlineKeyboardMarkup()
+    web_app = types.WebAppInfo("https://useful-kite-settled.ngrok-free.app")
+    button = types.InlineKeyboardButton(text="Зайти в Telegram Mini App", web_app=web_app)
+    keyboard.add(button)
+    bot.send_message(message.chat.id, f"Список задач на доске {message.text}", reply_markup=keyboard)
 
 
 if __name__ == "__main__":

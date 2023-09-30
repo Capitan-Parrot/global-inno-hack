@@ -14,29 +14,16 @@ class BoardsServise():
         )
         return boards.json()
 
-    def create_board(self,
-                     chat_id: int,
-                     name: str,
-                     space_id: str,
-                     project_id: str):
-
-        token = session.query(TokenDB).filter_by(chat_id=chat_id).first()
-        access_token = token.access_token
-        board = requests.post(
-            url=self.API_URL + '/create',
+    def board_to_user(self, user_id: int, board_id: str):
+        boards = requests.post(
+            url=self.API_URL + f'/boardsToUser',
+            params={"user_id": user_id,
+                    "board_id": board_id},
             headers={
                 'accept': 'application/json',
-                'Authorization': f'Bearer {access_token}',
-            },
-            data={
-                'name': name,
-                'spaceId': space_id,
-                'projectId': project_id,
-                'location': space_id,
             }
         )
+        return boards.json()
 
-        return board.json()
 
-
-boards = BoardsServise()
+board_service = BoardsServise()
