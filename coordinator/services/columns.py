@@ -4,20 +4,17 @@ from coordinator.core.database import session
 from coordinator.models import TokenDB
 
 
-class ProjectService():
-    API_URL = 'https://api.teamflame.ru/project'
+class ColumnsService():
+    API_URL = 'https://api.teamflame.ru/column'
 
-    def get_project_by_space_id(self, email: str, space_id: str):
+    def get_columns_by_board_id(self, email: str, board_id: str):
         token = session.query(TokenDB).filter_by(email=email).first()
         access_token = token.access_token
-        spaces = requests.get(
-            url=self.API_URL + f'/projectsBySpace/{space_id}',
+        columns = requests.get(
+            url=self.API_URL + f'/getByBoard/{board_id}',
             headers={
                 'accept': 'application/json',
                 'Authorization': f'Bearer {access_token}',
             }
         )
-        return spaces.json()
-
-
-project_service = ProjectService()
+        return columns.json()
