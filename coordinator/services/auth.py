@@ -7,7 +7,7 @@ from coordinator.models import TokenDB
 class AuthService:
     API_URL = 'https://auth-api.teamflame.ru/auth'
 
-    def sign_in(self, chat_id, email, password):
+    def sign_in(self, user_id, email, password):
         # , email: str, password: str
         # access_token = ...
         response = requests.post(
@@ -21,7 +21,7 @@ class AuthService:
             }
         )
         tokens = response.json()
-        db_token = TokenDB(chat_id=chat_id,
+        db_token = TokenDB(user_id=user_id,
                            access_token=tokens["tokens"]["accessToken"]["token"],
                            refresh_token=tokens["tokens"]["refreshToken"]["token"])
         session.add(db_token)

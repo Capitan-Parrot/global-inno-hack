@@ -15,8 +15,11 @@ from coordinator.models import TokenDB
 class SpaceService():
     API_URL = 'https://api.teamflame.ru/space'
 
-    def get_spaces_by_user_id(self, chat_id: int):
-        token = session.query(TokenDB).filter_by(chat_id=chat_id).first()
+    def get_spaces_by_user_id(self, user_id: int):
+        """
+        Main
+        """
+        token = session.query(TokenDB).filter_by(user_id=user_id).first()
         access_token = token.access_token
 
         spaces = requests.get(
@@ -24,15 +27,12 @@ class SpaceService():
             headers={
                 'accept': 'application/json',
                 'Authorization': f'Bearer {access_token}',
-
             }
         )
         return spaces.json()
 
-
-
-    def get_spaces_by_id(self, chat_id: int, space_id: str):
-        token = session.query(TokenDB).filter_by(chat_id=chat_id).first()
+    def get_spaces_by_id(self, user_id: int, space_id: str):
+        token = session.query(TokenDB).filter_by(user_id=user_id).first()
         access_token = token.access_token
 
         spaces = requests.get(
@@ -85,8 +85,8 @@ class SpaceService():
         return result
     
 
-    def get_spaces_by_id(self, chat_id: int, space_id: str):
-        token = session.query(TokenDB).filter_by(chat_id=chat_id).first()
+    def get_spaces_by_id(self, user_id: int, space_id: str):
+        token = session.query(TokenDB).filter_by(user_id=user_id).first()
         access_token = token.access_token
         spaces = requests.get(
             url=self.API_URL + f'/{space_id}',
@@ -98,10 +98,5 @@ class SpaceService():
         return spaces
 
 
-sr = SpaceService()
-result = sr.get_spaces_by_user_id()[0]
-
-space_id = result['id']
-print(space_id)
 
 space_service = SpaceService()

@@ -5,7 +5,7 @@ import requests
 class AuthService:
     API_URL = 'https://auth-api.teamflame.ru/auth'
 
-    def sign_in(self, chat_id, email, password):
+    def sign_in(self, user_id, email, password):
         # , email: str, password: str
         # access_token = ...
         response = requests.post(

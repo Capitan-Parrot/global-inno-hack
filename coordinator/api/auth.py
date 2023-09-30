@@ -4,3 +4,5 @@ app = FastApi()
 api_router = APIRouter()
 
 @api_router.get()
+async def a():
+    pass

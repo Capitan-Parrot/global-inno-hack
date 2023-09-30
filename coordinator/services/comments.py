@@ -7,8 +7,8 @@ from coordinator.models import TokenDB
 class CommentServices:
     API_URL = 'https://api.teamflame.ru/comment'
 
-    def add_comment(self, chat_id: int, task_id: str, text_message: str):
-        token = session.query(TokenDB).filter_by(chat_id=chat_id).first()
+    def add_comment(self, user_id: int, task_id: str, text_message: str):
+        token = session.query(TokenDB).filter_by(user_id=user_id).first()
         access_token = token.access_token
         new_comment = requests.post(
             url=self.API_URL + '/create',
