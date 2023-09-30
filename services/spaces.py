@@ -2,11 +2,11 @@ import requests
 
 
 class SpaceService():
-    API_URL = 'https://global-inno-hack-dd509ac0d0a4.herokuapp.com/space'
+    API_URL = 'https://global-inno-hack-dd509ac0d0a4.herokuapp.com/spaces'
 
-    def get_spaces_by_user_id(self, chat_id: int):
+    def get_spaces_by_user_id(self, user_id: int):
         spaces = requests.get(
-            url=self.API_URL + '/spacesByUserId',
+            url=self.API_URL + '/spacesByUserId/' + str(user_id),
             headers={
                 'accept': 'application/json'
             }

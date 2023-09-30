@@ -4,17 +4,16 @@ import requests
 class ProjectService():
     API_URL = 'https://global-inno-hack-dd509ac0d0a4.herokuapp.com/project'
 
-    def get_project_by_space_id(self, chat_id: int, space_id: str):
-        token = session.query(TokenDB).filter_by(chat_id=chat_id).first()
-        access_token = token.access_token
-        spaces = requests.get(
+    def get_project_by_space_id(self, user_id: int, space_id: str):
+        project = requests.get(
             url=self.API_URL + f'/projectsBySpace/{space_id}',
+            params={"user_id": user_id},
             headers={
                 'accept': 'application/json',
-                'Authorization': f'Bearer {access_token}',
             }
         )
-        return spaces.json()
+        print(project.url)
+        return project.json()
 
 
 project_service = ProjectService()
