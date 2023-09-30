@@ -19,5 +19,23 @@ class BoardsServise():
         )
         return boards.json()
 
+    def create_board(self, name: str, space_id: str, project_id: str):
+        access_token = my_access_token
+        board = requests.post(
+            url=self.API_URL + '/create',
+            headers={
+                'accept': 'application/json',
+                'Authorization': f'Bearer {access_token}',
+            },
+            data={
+                'name': name,
+                'spaceId': space_id,
+                'projectId': project_id,
+                'location': space_id,
+            }
+        )
+
+        return board.json()
+
 
 boards = BoardsServise()
