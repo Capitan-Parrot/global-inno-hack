@@ -7,7 +7,6 @@ from models import TokenDB
 class TaskService:
     API_URL = 'https://api.teamflame.ru/task'
 
-
     def get_task_by_id(self, email: str, task_id: str):
         token = session.query(TokenDB).filter_by(email=email).first()
         access_token = token.access_token

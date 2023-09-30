@@ -18,3 +18,6 @@ class ColumnsService():
             }
         )
         return columns.json()
+
+
+columns_service = ColumnsService()
