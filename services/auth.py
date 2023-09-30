@@ -7,7 +7,7 @@ from models import TokenDB, UserDB
 class AuthService:
     API_URL = 'https://auth-api.teamflame.ru/auth'
 
-    def sign_in(self, email, password):
+    def sign_in(self, email: str, password: str):
         response = requests.post(
             url=self.API_URL + '/sign-in',
             data={
@@ -19,6 +19,8 @@ class AuthService:
             }
         )
         tokens = response.json()
+        user = UserDB(email=email,
+                      )
         db_token = TokenDB(email=email,
                            access_token=tokens["tokens"]["accessToken"]["token"],
                            refresh_token=tokens["tokens"]["refreshToken"]["token"])
