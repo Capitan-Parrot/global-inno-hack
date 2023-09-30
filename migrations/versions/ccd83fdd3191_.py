@@ -1,7 +1,7 @@
 """empty message
 
 Revision ID: ccd83fdd3191
-Revises: 
+Revises:
 Create Date: 2023-09-30 00:42:19.683657
 
 """

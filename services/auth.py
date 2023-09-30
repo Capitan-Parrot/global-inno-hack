@@ -19,6 +19,7 @@ class AuthService:
             }
         )
         tokens = response.json()
+        print(tokens)
         db_token = TokenDB(email=email,
                            access_token=tokens["tokens"]["accessToken"]["token"],
                            refresh_token=tokens["tokens"]["refreshToken"]["token"])

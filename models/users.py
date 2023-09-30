@@ -9,5 +9,3 @@ class UserDB(Base):
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, unique=True)
     email = Column(String)
-
-    

@@ -1,6 +1,0 @@
-../.idea
-.env
-venv
-.venv
-test.ipynb
-__pycache__
