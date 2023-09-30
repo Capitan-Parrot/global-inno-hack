@@ -1,3 +1,5 @@
+import json
+
 import telebot as telebot
 from telebot import types
 
@@ -8,6 +10,7 @@ from services.spaces import space_service
 # Объект бота
 bot = telebot.TeleBot(token=config.bot_token.get_secret_value())
 markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+
 
 @bot.message_handler(commands=['start'])
 def start(message):
@@ -47,11 +50,19 @@ def save_data(message, email):
 @bot.message_handler(commands=['my-spaces'])
 def my_spaces(message):
     spaces = space_service.get_spaces_by_user_id(message.chat.id)
-    keyboard = []
+    markup = telebot.types.ReplyKeyboardMarkup()
+    name_to_id = {}
     for space in spaces:
-        keyboard.append(telebot.types.InlineKeyboardButton(space["name"], callback_data=space["id"]))
-    markup.keyboard = keyboard
-    bot.send_message(message.chat.id, reply_markup=markup)
+        markup.add(telebot.types.InlineKeyboardButton(space["name"]))
+        name_to_id[space["name"]] = space["id"]
+    bot.send_message(message.chat.id, "Ваши пространства", reply_markup=markup)
+    bot.register_next_step_handler(message, get_space, name_to_id)
+
+
+def get_space(message, names):
+    print(message)
+    space_id = message["text"]
+    print(space_id)
 
 
 if __name__ == "__main__":
