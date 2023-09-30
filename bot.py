@@ -1,12 +1,8 @@
-import asyncio
-import logging
-
 import telebot as telebot
 
 from config import config
+from services.auth import auth_service
 
-# Включаем логирование, чтобы не пропустить важные сообщения
-logging.basicConfig(level=logging.INFO)
 # Объект бота
 bot = telebot.TeleBot(token=config.bot_token.get_secret_value())
 
@@ -14,32 +10,36 @@ bot = telebot.TeleBot(token=config.bot_token.get_secret_value())
 @bot.message_handler(commands=['start'])
 def start(message):
     markup = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True)
-    itembtn = telebot.types.KeyboardButton('Sign-In')
+    itembtn = telebot.types.InlineKeyboardButton('sign-in')
     markup.add(itembtn)
     bot.send_message(message.chat.id, "Welcome to my bot!", reply_markup=markup)
 
 
-@bot.message_handler(func=lambda message: True)
-def echo_all(message):
-    if message.text == 'Sign-In':
-        bot.send_message(message.chat.id, "Please enter your email:")
-        bot.register_next_step_handler(message, ask_password)
+@bot.message_handler(content_types=['text'])
+def handle_message(message):
+    if message.text == 'sign-in':
+        sign_in(message)
+
+
+@bot.message_handler(commands=['sign-in'])
+def sign_in(message):
+    bot.send_message(message.chat.id, "Please enter your email:")
+    bot.register_next_step_handler(message, ask_password)
 
 
 def ask_password(message):
     email = message.text
     bot.send_message(message.chat.id, "Please enter your password:")
-    bot.register_next_step_handler(message, print_data, email)
+    bot.register_next_step_handler(message, save_data, email)
 
 
-def print_data(message, email):
+def save_data(message, email):
     password = message.text
-    bot.send_message(message.chat.id, f"Email: {email}\nPassword: {password}")
+    tokens = auth_service.sign_in(message.chat.id, email, password)
+    bot.send_message(message.chat.id, "You are logged in")
 
 
 # Запуск процесса поллинга новых апдейтов
-async def start_polling():
-    await bot.polling()
 
 if __name__ == "__main__":
-    asyncio.run(start_polling())
+    bot.infinity_polling(none_stop=True)
