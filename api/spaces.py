@@ -12,5 +12,4 @@ spaces_router = APIRouter(prefix='/spaces', tags=['spaces'])
 async def get_spaces_by_user_id(user_id: int):
     email = session.query(UserDB).filter_by(user_id=user_id).first().email
     spaces = space_service.get_spaces_by_user_id(email)
-
     return spaces
