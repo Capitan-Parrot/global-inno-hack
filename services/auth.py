@@ -1,13 +1,19 @@
 import requests
 
 from core.database import session
-from models import TokenDB
+from models import TokenDB, UserDB
 
 
 class AuthService:
     API_URL = 'https://auth-api.teamflame.ru/auth'
 
-    def sign_in(self, email, password):
+    def sign_in(self, user_id, email, password):
+        user = session.query(UserDB).filter_by(user_id=user_id).first()
+        if user:
+            print('!!!!!!!!!!!!!!')
+            return session.query(TokenDB).filter_by(email=user.email).first().access_token
+
+        print('?????????????????')
         response = requests.post(
             url=self.API_URL + '/sign-in',
             data={
@@ -19,7 +25,6 @@ class AuthService:
             }
         )
         tokens = response.json()
-        print(tokens)
         db_token = TokenDB(email=email,
                            access_token=tokens["tokens"]["accessToken"]["token"],
                            refresh_token=tokens["tokens"]["refreshToken"]["token"])
