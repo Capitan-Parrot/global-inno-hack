@@ -1,2 +1,5 @@
 .idea
 .env
+.venv
+
+test.ipynb
