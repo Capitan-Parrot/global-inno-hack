@@ -22,7 +22,7 @@ async def root():
 
 if __name__ == "__main__":
     uvicorn.run(
-        'app.__main__:app',
+        'main:app',
         host=config.server_host,
         port=config.server_port,
         reload=True

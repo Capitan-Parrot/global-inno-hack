@@ -1,4 +1,5 @@
 # global-inno-hack
+
 Тут мы уже ничего не сможем сделать
 
 
@@ -16,3 +17,4 @@
 
 [Артём, Developer](https://t.me/cradm_lozzer)
 
+There’s nothing we can do
