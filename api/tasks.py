@@ -19,7 +19,19 @@ async def get_task_by_id(user_id: int,  task_id: str):
 @tasks_router.get('/getTasksByColumn/{column_id}')
 async def get_task_by_column(user_id: int, column_id: str):
     email = session.query(UserDB).filter_by(user_id=user_id).first().email
-    tasks = tasks_service.get_tasks_by_column_id(email=email, column_id=column_id)
+    tasks = tasks_service.get_tasks_by_column_id(
+                                    email=email,
+                                    column_id=column_id
+                                    )
     return tasks
 
 
+@tasks_router.post('/change_column')
+async def change_column(user_id: int, task_id: str, column_id: str):
+    email = session.query(UserDB).filter_by(user_id=user_id).first().email
+    task = tasks_service.change_task_column(
+                            email=email,
+                            task_id=task_id,
+                            column_id=column_id
+                            )
+    return task

@@ -16,7 +16,7 @@ class TaskService:
                 'accept': 'application/json',
                 'Authorization': f'Bearer {access_token}',
             }
-        )   
+        )
         return task.json()
 
 
