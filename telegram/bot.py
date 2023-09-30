@@ -3,7 +3,7 @@ from telebot import types
 
 from telegram.config import config
 from telegram.services.auth import auth_service
-from telegram.services import project_service
+from telegram.services.projects import project_service
 from telegram.services.spaces import space_service
 
 # Объект бота
