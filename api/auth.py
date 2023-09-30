@@ -9,7 +9,7 @@ from models.tokens import TokenDB
 auth_router = APIRouter(prefix="/auth", tags=["auth"])
 
 
-@auth_router.get('/')
+@auth_router.post('/')
 def sign_in(user_id: int, email: str, password: str):
     user = session.query(UserDB).filter_by(user_id=user_id).first()
     if not user:
