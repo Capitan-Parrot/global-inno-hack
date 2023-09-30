@@ -9,7 +9,6 @@ from models import TokenDB
 class SpaceService():
     API_URL = 'https://api.teamflame.ru/space'
 
-
     def get_spaces_by_user_id(self, email: str):
         token = session.query(TokenDB).filter_by(email=email).first()
         access_token = token.access_token
@@ -22,7 +21,6 @@ class SpaceService():
             }
         )
         return spaces.json()
-    
 
     def get_spaces_by_id(self, email: str, space_id: str):
         token = session.query(TokenDB).filter_by(email=email).first()
@@ -34,7 +32,7 @@ class SpaceService():
                 'Authorization': f'Bearer {access_token}',
             }
         )
-        return spaces
+        return spaces.json()
 
 
 

@@ -13,3 +13,10 @@ async def get_spaces_by_user_id(user_id: int):
     email = session.query(UserDB).filter_by(user_id=user_id).first().email
     spaces = space_service.get_spaces_by_user_id(email)
     return spaces
+
+
+@spaces_router.get('/{space_id}')
+def get_spaces_by_id(user_id: int, space_id: str):
+    email = session.query(UserDB).filter_by(user_id=user_id).first().email
+    spaces = space_service.get_spaces_by_id(email=email, space_id=space_id)
+    return spaces
