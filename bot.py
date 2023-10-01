@@ -99,6 +99,7 @@ def my_boards(message, name_to_id):
 
 def get_tasks(message):
     keyboard = types.InlineKeyboardMarkup()
+    board_service.board_to_user(user_id=message.from_user.id, board_id=message.text)
     web_app = types.WebAppInfo("https://useful-kite-settled.ngrok-free.app")
     button = types.InlineKeyboardButton(text="Зайти в Telegram Mini App", web_app=web_app)
     keyboard.add(button)
