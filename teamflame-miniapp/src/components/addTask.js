@@ -23,6 +23,8 @@ function AddTask(props){
         })
         .catch(resp=>{
             console.log(resp)
+            props.addTaskHandleClose()
+            props.checkUpdate(nameTask)
         })
         .catch(e=>{
             

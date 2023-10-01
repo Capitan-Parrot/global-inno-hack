@@ -16,7 +16,7 @@ function Header(){
                 alt="React Bootstrap logo"
                 />
             </Navbar.Brand>
-            <Navbar.Brand className='header_text' href="#home">TeamFlame</Navbar.Brand>
+            <Navbar.Brand className='header_text'>TeamFlame</Navbar.Brand>
         </Container>
         </Navbar>
     )

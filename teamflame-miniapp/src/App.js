@@ -185,8 +185,13 @@ function App() {
         // </Container>
       }
       
-      <Row style={{position: 'absolute', top: tg.viewportStableHeight}}>
-        <Button onClick={addTaskHandleShow}>Добавить задачу</Button>
+      <Row className='position-fixed' style={{bottom:35, right:35}}>
+        <a onClick={addTaskHandleShow}>
+          <svg width="50" height="50" viewBox="0 0 24 24" fill="#855fef" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="12" r="10" stroke="#855fef" stroke-width="1.5"/>
+          <path d="M15 12L12 12M12 12L9 12M12 12L12 9M12 12L12 15" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </a>
       </Row>
 
       <AddTask
