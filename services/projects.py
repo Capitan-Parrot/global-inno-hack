@@ -12,7 +12,6 @@ class ProjectService():
                 'accept': 'application/json',
             }
         )
-        print(project.url)
         return project.json()
 
 

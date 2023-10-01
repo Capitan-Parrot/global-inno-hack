@@ -26,10 +26,10 @@ def start(message):
 
 @bot.message_handler(content_types=['text'])
 def handle_message(message):
-    print(message)
+    print(message.text)
     if message.text == 'Войти в аккаунт TeamFlame':
         sign_in(message)
-    elif message.text == 'Мои пространства':
+    elif message.text == 'Мои пространства' or message.text == '/my_spaces':
         my_spaces(message)
 
 
@@ -56,7 +56,7 @@ def save_data(message, email):
         my_spaces(message)
     except JSONDecodeError:
         bot.send_message(message.chat.id, "Аккаунт не найден. Пожалуйста, попробуйте ещё раз.")
-        bot.register_next_step_handler(message, start)
+        start(message)
 
 
 @bot.message_handler(commands=['Мои пространства', 'my_spaces'])
@@ -72,6 +72,8 @@ def my_spaces(message):
 
 
 def my_projects(message, name_to_id):
+    if message.text == "/my_spaces":
+        return my_spaces(message)
     space_name = message.text
     space_id = name_to_id[space_name]
     projects = project_service.get_project_by_space_id(message.from_user.id, space_id)
@@ -85,7 +87,7 @@ def my_projects(message, name_to_id):
 
 
 def my_boards(message, name_to_id):
-    if message.text == "Вернуться к пространствам":
+    if message.text == "/my_spaces":
         return my_spaces(message)
     project_name = message.text
     project_id = name_to_id[project_name]
@@ -100,8 +102,9 @@ def my_boards(message, name_to_id):
 
 
 def get_tasks(message, name_to_id):
+    if message.text == "/my_spaces":
+        return my_spaces(message)
     keyboard = types.InlineKeyboardMarkup()
-    print(name_to_id, message.text)
     board_service.board_to_user(user_id=message.from_user.id, board_id=name_to_id[message.text])
     web_app = types.WebAppInfo("https://useful-kite-settled.ngrok-free.app")
     button = types.InlineKeyboardButton(text="Зайти в Telegram Mini App", web_app=web_app)
