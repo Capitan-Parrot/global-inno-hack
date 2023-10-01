@@ -25,9 +25,12 @@ function Tasks(props){
             handleClose={handleClose}
             taskName={props.task}
             statuses={props.statuses}
+            status={props.status}
+            author={props.author}
             comments={props.comments}
             columns_id={props.columns_id}
             task_id={props.task_id}
+            task_desc={props.task_desc}
 
             checkUpdate={props.checkUpdate}
         />

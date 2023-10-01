@@ -5,15 +5,18 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import { Badge } from 'react-bootstrap';
 
 const tg = window.Telegram.WebApp;
 
 function Task(props){
-    const [comments, setComments] = useState(['com 1', 'com 1','com 1','com 1','com 1','com 1','com 1',]);
+    // const [comments, setComments] = useState(['com 1', 'com 1','com 1','com 1','com 1','com 1','com 1',]);
 
     const [commentValue, setCommentValue] = useState('');
 
     const [newColumnId, setNewColumnId] = useState(0);
+
+    const USER_ID = tg.initDataUnsafe.user.id;
 
     const changeStatus = (index) => {
         console.log(props.task_id)
@@ -42,12 +45,13 @@ function Task(props){
             text_message: text
         }, {
             params:{
-                user_id: "100"
+                user_id: USER_ID
             }
         })
             .then(data=>{
                 console.log(data)
                 setCommentValue('')
+                // props.handleClose()
                 props.checkUpdate(text)
             })
             .catch(e=>{
@@ -57,21 +61,29 @@ function Task(props){
     return(
     <Modal show={props.show} onHide={props.handleClose}>
         <Modal.Header closeButton>
+        
           <Modal.Title style={{color:'black'}}>{props.taskName}</Modal.Title>
         </Modal.Header>
         <Modal.Body style={{color:'black'}}>
+            {props.task_desc != '' ? <p><strong>Описание</strong></p> : ''}
+            <p className='mb-1' style={{wordWrap: "break-word"}}>{props.task_desc}</p>
+            <hr/>
             <Form.Select aria-label="Default select example" onChange={e => changeStatus(e.target.value)}>
-                <option>Статус таски</option>
+                <option>Статус задачи</option>
                 {props.statuses.map((val, i)=>{
                     return(
                         <option key={i} value={i} >{val}</option>
                     )
                 })}
             </Form.Select>
-            <p className='mt-3'><span>Автор:</span></p>
-            <p className=''><span>Исполнители:</span></p>
+            <p>Текущий статус <Badge bg="warning">{props.status}</Badge></p>
+            <hr/>
+            <p className='mt-3'><strong>Автор:</strong> {props.author}</p>
+            <hr/>
+            <p className=''><strong>Исполнители:</strong></p>
+            <hr/>
             
-            <p className='mt-3'>Комментарии</p>
+            <p className='mt-3'><strong>Комментарии</strong></p>
             <InputGroup>
                 <Form.Control
                     type="text"
@@ -92,7 +104,7 @@ function Task(props){
                     return(
                         <div key={i} className='border-bottom'>
                             <p className='text-muted'>{val.userName}</p>
-                            <p>{val.text}</p>
+                            <p style={{wordWrap: "break-word"}}>{val.text}</p>
                         </div>   
                     )
                 }) : <></>}

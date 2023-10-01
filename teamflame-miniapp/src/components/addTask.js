@@ -5,23 +5,25 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 
+const tg = window.Telegram.WebApp;
+
 function AddTask(props){
     const [nameTask, setNameTask] = useState("");
     const [descTask, setDescTast] = useState("");
-
+    const USER_ID = tg.initDataUnsafe.user.id;
 
     const addTaskToServer = () => {
         axios.post("https://global-inno-hack-dd509ac0d0a4.herokuapp.com/tasks/create", {
             name: nameTask,
             description: descTask,
-            column_id: props.columns_id[0],
+            column_id: props.columns_id,
             users: []
         },{
             params:{
-                user_id:'100'
+                user_id: USER_ID
             }
         })
-        .catch(resp=>{
+        .then(resp=>{
             console.log(resp)
             props.addTaskHandleClose()
             props.checkUpdate(nameTask)
@@ -41,12 +43,12 @@ function AddTask(props){
     <Form>
         <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label style={{color:'black'}}>Задача</Form.Label>
-          <Form.Control onChange={e => setNameTask(e.target.value)} type="text"/>
+          <Form.Control value={nameTask} onChange={e => setNameTask(e.target.value)} type="text"/>
         </Form.Group>
   
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label style={{color:'black'}}>Описание</Form.Label>
-          <Form.Control onChange={e => setDescTast(e.target.value)} type="text"/>
+          <Form.Control value={descTask} onChange={e => setDescTast(e.target.value)} type="text"/>
         </Form.Group>
 
         {/* <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -54,7 +56,7 @@ function AddTask(props){
           <Form.Control type="text"/>
         </Form.Group> */}
 
-        <Button onClick={addTaskToServer}>
+        <Button disabled={nameTask === ''  ? true : false} onClick={addTaskToServer} >
           Добавить
         </Button>
       </Form>
