@@ -89,17 +89,19 @@ def my_boards(message, name_to_id):
         return my_spaces(message)
     project_name = message.text
     project_id = name_to_id[project_name]
+    name_to_id = {}
     boards = board_service.get_board_by_project_id(message.from_user.id, project_id)
     markup = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
     for board in boards:
         markup.add(telebot.types.InlineKeyboardButton(board["name"]))
+        name_to_id[board["name"]] = board["id"]
     bot.send_message(message.chat.id, "Ваши доски:", reply_markup=markup)
     bot.register_next_step_handler(message, get_tasks)
 
 
-def get_tasks(message):
+def get_tasks(message, name_to_id):
     keyboard = types.InlineKeyboardMarkup()
-    board_service.board_to_user(user_id=message.from_user.id, board_id=message.text)
+    board_service.board_to_user(user_id=message.from_user.id, board_id=name_to_id[message.text])
     web_app = types.WebAppInfo("https://useful-kite-settled.ngrok-free.app")
     button = types.InlineKeyboardButton(text="Зайти в Telegram Mini App", web_app=web_app)
     keyboard.add(button)
