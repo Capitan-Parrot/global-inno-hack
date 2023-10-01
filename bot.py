@@ -1,6 +1,7 @@
 import telebot as telebot
 from telebot import types
 from telebot.types import ReplyKeyboardRemove
+from json import JSONDecodeError
 
 from config import config
 from services.auth import auth_service
@@ -25,6 +26,7 @@ def start(message):
 
 @bot.message_handler(content_types=['text'])
 def handle_message(message):
+    print(message)
     if message.text == 'Войти в аккаунт TeamFlame':
         sign_in(message)
     elif message.text == 'Мои пространства':
@@ -52,14 +54,13 @@ def save_data(message, email):
         markup.add(itembtn)
         bot.send_message(message.chat.id, "Вы успешно авторизованы")
         my_spaces(message)
-    except KeyError:
+    except JSONDecodeError:
         bot.send_message(message.chat.id, "Аккаунт не найден. Пожалуйста, попробуйте ещё раз.")
         bot.register_next_step_handler(message, start)
 
 
 @bot.message_handler(commands=['Мои пространства'])
 def my_spaces(message):
-
     spaces = space_service.get_spaces_by_user_id(message.from_user.id)
     markup = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True)
     name_to_id = {}
