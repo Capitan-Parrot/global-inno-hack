@@ -11,6 +11,9 @@ comments_router = APIRouter(prefix='/comments', tags=['comments'])
 
 @comments_router.post('/')
 def create_comment(user_id: int, request: CreateComment):
+    """
+    Create comment
+    """
     email = session.query(UserDB).filter_by(user_id=user_id).first().email
     comment = comments_service.add_comment(
                             email=email,
