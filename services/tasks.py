@@ -51,7 +51,8 @@ class TaskService:
                     email: str,
                     name: str,
                     description: str,
-                    column_id: str
+                    column_id: str,
+                    users: list[str] | None,
                     ):
         token = session.query(TokenDB).filter_by(email=email).first()
         access_token = token.access_token
@@ -66,6 +67,7 @@ class TaskService:
                 'description': description,
                 'columnId': column_id,
                 'location': column_id,
+                'users': users
             }
         )
         return task.json()

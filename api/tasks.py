@@ -46,5 +46,6 @@ async def create_task(user_id: int, request: CreateTask):
         name=request.name,
         description=request.description,
         column_id=request.column_id,
+        users=request.users,
     )
     return task
