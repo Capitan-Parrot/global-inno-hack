@@ -47,6 +47,7 @@ async def create_board_to_user(user_id: int, board_id: str):
     board = session.query(BoardDB).filter_by(user_id=user_id).first()
     if not board:
         board = BoardDB(user_id=user_id, board_id=board_id)
+    board.board_id = board_id
     session.add(board)
     session.commit()
     return board
