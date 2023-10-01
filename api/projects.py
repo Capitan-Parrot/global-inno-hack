@@ -10,6 +10,9 @@ projects_router = APIRouter(prefix='/project', tags=['project'])
 
 @projects_router.get("/projectsBySpace/{space_id}")
 def get_project_by_space_id(user_id: int, space_id: str):
+    """
+    Get ptoject by space_id
+    """
     email = session.query(UserDB).filter_by(user_id=user_id).first().email
     return project_service.get_project_by_space_id(
                                             email=email,
@@ -19,6 +22,9 @@ def get_project_by_space_id(user_id: int, space_id: str):
 
 @projects_router.get('/{project_id}')
 def get_project_by_id(user_id: int, project_id: str):
+    """
+    Get project by id
+    """
     email = session.query(UserDB).filter_by(user_id=user_id).first().email
     return project_service.get_project_by_id(
                                     email=email,
