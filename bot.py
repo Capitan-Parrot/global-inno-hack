@@ -96,7 +96,7 @@ def my_boards(message, name_to_id):
         markup.add(telebot.types.InlineKeyboardButton(board["name"]))
         name_to_id[board["name"]] = board["id"]
     bot.send_message(message.chat.id, "Ваши доски:", reply_markup=markup)
-    bot.register_next_step_handler(message, get_tasks)
+    bot.register_next_step_handler(message, get_tasks, name_to_id)
 
 
 def get_tasks(message, name_to_id):
