@@ -59,7 +59,7 @@ def save_data(message, email):
         bot.register_next_step_handler(message, start)
 
 
-@bot.message_handler(commands=['Мои пространства'])
+@bot.message_handler(commands=['Мои пространства', 'my_spaces'])
 def my_spaces(message):
     spaces = space_service.get_spaces_by_user_id(message.from_user.id)
     markup = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True)
