@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean
+from sqlalchemy import Column, Integer, String
 
 from .base import Base
 
@@ -10,4 +10,3 @@ class TokenDB(Base):
     email = Column(String, unique=True)
     refresh_token = Column(String)
     access_token = Column(String)
-

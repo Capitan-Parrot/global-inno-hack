@@ -1,4 +1,4 @@
-from models.base import Base
-from models.tokens import TokenDB
-from models.users import UserDB
-from models.boards import BoardDB
+from models.base import Base  # noqa: F401
+from models.tokens import TokenDB  # noqa: F401
+from models.users import UserDB  # noqa: F401
+from models.boards import BoardDB  # noqa: F401

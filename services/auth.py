@@ -1,18 +1,18 @@
 import requests
 
 from core.database import session
-from models import TokenDB, UserDB
+from models import TokenDB
 
 
 class AuthService:
     API_URL = 'https://auth-api.teamflame.ru/auth'
 
-    def sign_in(self, email, password):
+    def sign_in(self, email: str, password: str):
         response = requests.post(
             url=self.API_URL + '/sign-in',
             data={
                 'email': email,
-                'password': password
+                'password': password,
             },
             headers={
                 'accept': 'application/json'
