@@ -2,6 +2,7 @@ import requests
 
 from core.database import session
 from models import TokenDB
+from services.tokens import tokens_services
 
 
 class AuthService:
@@ -19,7 +20,7 @@ class AuthService:
             }
         )
         tokens = response.json()
-        db_token = session.query(TokenDB).filter_by(email=email).first()
+        db_token = tokens_services.get_token_by_email(email=email)
         if not db_token:
             db_token = TokenDB(email=email)
         db_token.refresh_token = tokens["tokens"]["refreshToken"]["token"]

@@ -1,14 +1,12 @@
 import requests
-
-from core.database import session
-from models import TokenDB
+from services.tokens import tokens_services
 
 
 class CommentServices:
     API_URL = 'https://api.teamflame.ru/comment'
 
     def add_comment(self, email: str, task_id: str, text_message: str):
-        token = session.query(TokenDB).filter_by(email=email).first()
+        token = tokens_services.get_token_by_email(email=email)
         access_token = token.access_token
         new_comment = requests.post(
             url=self.API_URL + '/create',
