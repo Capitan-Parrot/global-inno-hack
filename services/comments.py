@@ -14,7 +14,7 @@ class CommentServices:
                 'accept': 'application/json',
                 'Authorization': f'Bearer {access_token}',
             },
-            data={
+            json={
                 'task': task_id,
                 'text': text_message,
             }

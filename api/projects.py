@@ -9,8 +9,8 @@ projects_router = APIRouter(prefix='/project', tags=['project'])
 
 
 @projects_router.get(
-        "/projectsBySpace/{space_id}",
-        status_code=status.HTTP_200_OK
+    "/projectsBySpace/{space_id}",
+    status_code=status.HTTP_200_OK
 )
 def get_project_by_space_id(user_id: int, space_id: str):
     """

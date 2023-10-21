@@ -30,8 +30,7 @@ def get_board_by_project_id(user_id: int, project_id: str):
     return boards
 
 
-@boards_router.get('/boardsByUser',
-                   )
+@boards_router.get('/boardsByUser', status_code=status.HTTP_200_OK)
 def get_board_by_user_id(user_id: int):
     """
     Get board by user_id

@@ -32,7 +32,7 @@ class TaskService:
                 'accept': 'application/json',
                 'Authorization': f'Bearer {access_token}',
             },
-            data={
+            json={
                 'columnId': column_id,
                 'location': task_id
             }
@@ -51,13 +51,14 @@ class TaskService:
         )
         return task.json()
 
-    def create_task(self,
-                    email: str,
-                    name: str,
-                    description: str,
-                    column_id: str,
-                    users: list[str] | None,
-                    ) -> dict:
+    def create_task(
+        self,
+        email: str,
+        name: str,
+        description: str,
+        column_id: str,
+        users: list[str] | None,
+    ) -> dict:
         token = tokens_services.get_token_by_email(email=email)
         access_token = token.access_token
         task = requests.post(
@@ -65,13 +66,14 @@ class TaskService:
             headers={
                 'accept': 'application/json',
                 'Authorization': f'Bearer {access_token}',
+                'Content-Type': 'application/json',
             },
-            data={
+            json={
                 'name': name,
                 'description': description,
                 'columnId': column_id,
                 'location': column_id,
-                'users': users
+                'users': users,
             }
         )
         return task.json()

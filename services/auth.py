@@ -11,7 +11,7 @@ class AuthService:
     def sign_in(self, email: str, password: str):
         response = requests.post(
             url=self.API_URL + '/sign-in',
-            data={
+            json={
                 'email': email,
                 'password': password,
             },
@@ -31,6 +31,3 @@ class AuthService:
 
 
 auth_service = AuthService()
-
-if __name__ == "__main__":
-    auth_service.sign_in(123, "kondrandr2004@yandex.ru", "Qwerty2004")

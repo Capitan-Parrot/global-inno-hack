@@ -32,7 +32,6 @@ class BoardsService():
         return boards.json()
 
     def get_board_by_user_id(self, user_id: int):
-        print(user_id)
         board = session.query(BoardDB).filter_by(user_id=user_id).first()
         return board
 
@@ -51,7 +50,7 @@ class BoardsService():
                 'accept': 'application/json',
                 'Authorization': f'Bearer {access_token}',
             },
-            data={
+            json={
                 'name': name,
                 'spaceId': space_id,
                 'projectId': project_id,

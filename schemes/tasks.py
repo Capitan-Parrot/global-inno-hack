@@ -9,5 +9,5 @@ class TaskChangeColumn(BaseModel):
 class CreateTask(BaseModel):
     name: str
     description: str | None
-    column_id: str
+    columnId: str
     users: list[str] | None

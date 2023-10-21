@@ -67,7 +67,7 @@ async def create_task(user_id: int, request: CreateTask):
         email=email,
         name=request.name,
         description=request.description,
-        column_id=request.column_id,
+        column_id=request.columnId,
         users=request.users,
     )
     return task
